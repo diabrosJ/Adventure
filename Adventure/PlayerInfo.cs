@@ -8,5 +8,6 @@ namespace Adventure
 {
     internal class PlayerInfo
     {
+        //여긴 건들이지 말아주세요.
     }
 }
