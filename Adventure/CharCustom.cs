@@ -9,6 +9,14 @@ namespace Adventure
 {
     internal class CharCustom
     {
+        PlayerInfo player;
+        public void MakeName()
+        {
+            Console.WriteLine("게임에서 사용할 이름을 작성해주세요.");
+            string PlayerName = Console.ReadLine();
+            Console.Clear();
+            ChoiceClass();
+        }
 
         enum ClassType
         {
@@ -28,7 +36,6 @@ namespace Adventure
                 Console.WriteLine("[1] 전사");
                 Console.WriteLine("[2] 마법사");
                 Console.WriteLine("[3] 도적");
-
                 int input;
                 ClassType choice;
                 int.TryParse(Console.ReadLine(), out input);
@@ -37,8 +44,13 @@ namespace Adventure
                 {
                     case 1:
                         choice = ClassType.Warrior;
-                        Console.WriteLine("전사를 선택하셨습니다.");
+                        if (int.TryParse(Console.ReadLine(), out input))
+                        {
+                            Console.WriteLine("전사를 선택하셨습니다.");
+                            Console.WriteLine("");
+                        }
                         goMain.mainScence(createClass.warrior());
+                        //CreatClass Warrior랑 넘깁니다. 아래쪽도 동일
                         return;
                     case 2:
                         choice = ClassType.Wizard;
