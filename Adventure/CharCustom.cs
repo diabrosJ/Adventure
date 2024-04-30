@@ -50,7 +50,7 @@ namespace Adventure
                             Console.WriteLine("");
                         }
                         goMain.mainScence(createClass.warrior());
-                        //CreatClass Warrior랑 넘깁니다. 아래쪽도 동일
+                        //CreatClass Warrior랑 MainScence로 넘깁니다. 아래쪽도 동일
                         return;
                     case 2:
                         choice = ClassType.Wizard;
