@@ -8,7 +8,9 @@ namespace Adventure
 {
     internal class PlayerInfo
     {
+        CharCustom name;
         GoMain main;
+        public string Name { get; set; }
         public string Job { get; set; }
         public int Lv { get; set; }
         public int Str { get; set; }
@@ -18,9 +20,11 @@ namespace Adventure
         public int menu { get; set; }
         public int Mp { get; set; }
 
-        public PlayerInfo(string job,int lv, int str, int def, int hp, int mp, int gold)
+        public PlayerInfo(string name, string job,int lv, int str, int def, int hp, int mp, int gold)
         { //생성자 < 
 
+            Name = name;
+            //이름
             Job = job;
             //직업
             Lv = lv;
@@ -42,6 +46,7 @@ namespace Adventure
 
             while (true)
             {
+                Console.WriteLine($"이름 : {Name}");
                 Console.WriteLine($"직업 : {Job}");
                 Console.WriteLine($"Lv : {Lv}");
                 Console.WriteLine($"공격력 : {Str}");
