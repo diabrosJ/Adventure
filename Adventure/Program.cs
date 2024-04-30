@@ -4,9 +4,7 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
-
-            Console.WriteLine("정창영");
+            //시작후 CharCustom으로 넘길 예정
         }
     }
 }
