@@ -18,7 +18,8 @@ namespace Adventure
         public int menu { get; set; }
         public int Mp { get; set; }
 
-        public PlayerInfo(string job,int lv, int str, int def, int hp, int mp, int gold)
+        public PlayerI
+            nfo(string job,int lv, int str, int def, int hp, int mp, int gold)
         { //생성자 < 
 
             Job = job;
