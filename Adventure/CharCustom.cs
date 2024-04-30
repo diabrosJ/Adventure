@@ -10,10 +10,12 @@ namespace Adventure
     internal class CharCustom
     {
         PlayerInfo player;
+        string playerName;
+
         public void MakeName()
         {
             Console.WriteLine("게임에서 사용할 이름을 작성해주세요.");
-            string PlayerName = Console.ReadLine();
+            playerName = Console.ReadLine();
             Console.Clear();
             ChoiceClass();
         }
@@ -44,23 +46,25 @@ namespace Adventure
                 {
                     case 1:
                         choice = ClassType.Warrior;
-                        if (int.TryParse(Console.ReadLine(), out input))
-                        {
-                            Console.WriteLine("전사를 선택하셨습니다.");
-                            Console.WriteLine("");
-                        }
-                        goMain.mainScence(createClass.warrior());
+                        Console.WriteLine("전사를 선택하셨습니다.");
+                        player = createClass.warrior();
+                        player.Name = playerName;
+                        goMain.mainScence(player);
                         //CreatClass Warrior랑 MainScence로 넘깁니다. 아래쪽도 동일
                         return;
                     case 2:
                         choice = ClassType.Wizard;
                         Console.WriteLine("마법사를 선택하셨습니다.");
-                        goMain.mainScence(createClass.wizard());
+                        player = createClass.wizard();
+                        player.Name = playerName;
+                        goMain.mainScence(player);
                         return;
                     case 3:
                         choice = ClassType.Bandit;
                         Console.WriteLine("도적를 선택하셨습니다.");
-                        goMain.mainScence(createClass.bandit());
+                        player = createClass.bandit();
+                        player.Name = playerName;
+                        goMain.mainScence(player);
                         return;
                 }
             }
