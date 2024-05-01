@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Adventure
 {
-    internal class GoMain
+    public class GoMain
     {
+        Inventory inventory = new Inventory();
+        Shop shop = new Shop();
         PlayerInfo playerinfo;
         CharCustom player;
         public void mainScence(PlayerInfo _playerinfo)
@@ -32,6 +34,11 @@ namespace Adventure
                     case 1:
                         playerinfo.Info();
                         break;
+                    case 2:
+                        break;
+                    case 3:
+                        shop.VisitShop(playerinfo,shop,inventory); 
+                        return;
                 }
 
             }

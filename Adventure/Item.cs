@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Adventure
 {
-    class Item
+    public class Item
     {
         public string Name { get; } // 아이템 이름
         public string Description { get; } // 아이템 설명

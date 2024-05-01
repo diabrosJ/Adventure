@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Adventure
 {
-    internal class CharCustom
+    public class CharCustom
     {
         PlayerInfo player;
         string playerName;
@@ -66,6 +66,7 @@ namespace Adventure
                         player.Name = playerName;
                         goMain.mainScence(player);
                         return;
+                    
                 }
             }
 

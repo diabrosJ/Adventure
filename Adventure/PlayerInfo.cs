@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace Adventure
 {
-    internal class PlayerInfo
+    public class PlayerInfo
     {
         CharCustom name;
         GoMain main;
+        Inventory inventory;
+        Shop shop;
         public string Name { get; set; }
         public string Job { get; set; }
         public int Lv { get; set; }

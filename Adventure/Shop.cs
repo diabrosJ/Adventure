@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Adventure
 {
-    class Shop
+    public class Shop
     {
 
         //GoMain goMain;
-        private List<Item> availableItems;
+        public List<Item> availableItems;
 
 
         //상점 판매 목록 아이템 데이터
