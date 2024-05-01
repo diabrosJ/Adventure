@@ -14,18 +14,18 @@ internal class GoBattle
         int choice = ConsoleUitility.PromptMenuCholce(1, 4);
         switch (choice)
         {
-            case 1:
-                MonsterInfo();
-                break;
-            case 2:
-                UseAttack();
-                break;
-            case 3:
-                UseSkill();
-                break;
-            case 4:
-                UsePotion();
-                break;
+            //case 1:
+            //    MonsterInfo();
+            //    break;
+            //case 2:
+            //    UseAttack();
+            //    break;
+            //case 3:
+            //    UseSkill();
+            //    break;
+            //case 4:
+            //    UsePotion();
+            //    break;
         }
 
     }

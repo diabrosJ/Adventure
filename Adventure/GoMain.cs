@@ -12,6 +12,7 @@ namespace Adventure
         Shop shop = new Shop();
         PlayerInfo playerinfo;
         CharCustom player;
+        StageSelect stageselect;
         public void mainScence(PlayerInfo _playerinfo)
         {
 
@@ -35,10 +36,21 @@ namespace Adventure
                         playerinfo.Info();
                         break;
                     case 2:
+                        stageselect.StageSelectMenu();
                         break;
                     case 3:
-                        shop.VisitShop(playerinfo,shop,inventory); 
+                        shop.VisitShop(playerinfo,shop,inventory);
                         return;
+                    default:
+                        if (input != 1 && input != 3)
+                        {
+                            Console.WriteLine("잘못 입력하셨습니다.");
+                            Console.WriteLine("다시 입력해주세요.");
+                            Console.WriteLine("2초후 다시 선택창으로 넘어갑니다.");
+                            Thread.Sleep(2000);
+                            Console.Clear();
+                        }
+                        break;
                 }
 
             }

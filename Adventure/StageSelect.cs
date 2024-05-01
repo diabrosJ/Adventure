@@ -1,6 +1,6 @@
 ﻿internal class StageSelect
 {
-    public static void StageSelectMenu()
+    public void StageSelectMenu()
     {
         Console.Clear();
 
@@ -25,7 +25,7 @@
         }
 
     }
-    public static void StageMenu()
+    public void StageMenu()
     {
         Console.Clear();
         Console.WriteLine("스테이지를 선택해주세요 \n");
@@ -48,21 +48,21 @@
         }
     }
 
-    public static void Stage1()
+    public void Stage1()
     {
         Console.Clear();
         Console.WriteLine("1스테이지 입니다.\n메뉴를 선택해 주세요");
         Console.WriteLine("1. 싸우러가기");
         Console.WriteLine("2. ");
     }
-    public static void Stage2()
+    public void Stage2()
     {
         Console.Clear();
         Console.WriteLine("2스테이지 입니다.\n메뉴를 선택해 주세요");
         Console.WriteLine("1. 싸우러가기");
         Console.WriteLine("2. ");
     }
-    public static void Stage3()
+    public void Stage3()
     {
         Console.Clear();
         Console.WriteLine("3스테이지 입니다.\n메뉴를 선택해 주세요");
