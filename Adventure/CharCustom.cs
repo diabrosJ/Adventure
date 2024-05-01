@@ -10,8 +10,9 @@ namespace Adventure
     public class CharCustom
     {
         PlayerInfo player;
+        //선택할 캐릭터
         string playerName;
-
+        //info로 넘길 이름값
         public void MakeName()
         {
             Console.WriteLine("게임에서 사용할 이름을 작성해주세요.");

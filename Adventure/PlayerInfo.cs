@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,8 +11,8 @@ namespace Adventure
     {
         CharCustom name;
         GoMain main;
-        Inventory inventory;
-        Shop shop;
+        Inventory inventory = new Inventory();
+        Shop shop = new Shop();
         public string Name { get; set; }
         public string Job { get; set; }
         public int Lv { get; set; }
@@ -48,10 +49,9 @@ namespace Adventure
             equippedItems = new List<Item>();
             //장착한 아이템 목록
         }
-        public void Info()
+        public void Info(PlayerInfo player)
         {
             Console.Clear();
-
             while (true)
             {
                 Console.WriteLine($"이름 : {Name}");
@@ -62,14 +62,38 @@ namespace Adventure
                 Console.WriteLine($"체력 : {Hp}");
                 Console.WriteLine($"마력 : {Mp}");
                 Console.WriteLine($"골드 : {Gold}");
+                Console.WriteLine("");
+                Console.WriteLine("1. 이전 메뉴로");
+                Console.WriteLine("2. 인벤토리");
+                Console.WriteLine("3. 상점 입장하기");
                 
-                int input;
-                int.TryParse(Console.ReadLine(), out input);
+
+                int.TryParse(Console.ReadLine(), out int input);
                 switch (input)
                 {
                     case 1:
                         Console.Clear();
                         return;
+                    case 2:
+                        inventory.GetItems();
+                        //인벤토리로 바로 들어가는거 확인했습니다
+                        //return 바로 메인으로 갑니다.
+                        //저장된 아이템이 등록과 확인이 되는지 부탁드립니다.
+                        Console.Clear();
+                        break;
+                    case 3:
+                        shop.VisitShop(player, shop, inventory);
+                        return;
+                    default:
+                        if (input != 1 && input != 3)
+                        {
+                            Console.WriteLine("잘못 입력하셨습니다.");
+                            Console.WriteLine("다시 입력해주세요.");
+                            Console.WriteLine("2초후 다시 선택창으로 넘어갑니다.");
+                            Thread.Sleep(2000);
+                            Console.Clear();
+                        }
+                        break;
                 }
             }
         }
