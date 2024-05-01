@@ -22,6 +22,8 @@ namespace Adventure
         public int menu { get; set; }
         public int Mp { get; set; }
 
+        private List<Item> equippedItems;
+
         public PlayerInfo(string name, string job,int lv, int str, int def, int hp, int mp, int gold)
 
         { //생성자 < 
@@ -42,6 +44,9 @@ namespace Adventure
             //마력
             Gold = gold;
             //골드
+
+            equippedItems = new List<Item>();
+            //장착한 아이템 목록
         }
         public void Info()
         {
@@ -68,5 +73,46 @@ namespace Adventure
                 }
             }
         }
+
+        //장착한 아이템을 포함한 총 공격력 계산
+        public int GetEquippedAttack()
+        {
+            int total = Str;
+            foreach(var item in equippedItems)
+            {
+                total += item.AttackBonus;
+            }
+            return total;
+        }
+
+        //장착한 아이템을 포함한 총 방어력 계산
+        public int GetEquippedDefense()
+        {
+            int total = Def;
+            foreach(var item in equippedItems)
+            {
+                total += item.DefenseBonus;
+            }
+            return total;
+        }
+
+        //아이템 장착
+        public void EquipItem(Item item)
+        {
+            equippedItems.Add(item);
+        }
+
+        //아이템 장착 해제
+        public void UnequipItem(Item item)
+        {
+            equippedItems.Remove(item);
+        }
+
+        //골드 조정, 지정된 양만큼 증감
+        public void AdjustGold(int amount)
+        {
+            Gold += amount;
+        }
+
     }
 }
