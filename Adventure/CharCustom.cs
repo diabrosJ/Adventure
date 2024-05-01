@@ -9,16 +9,17 @@ namespace Adventure
 {
     public class CharCustom
     {
+
         PlayerInfo player;
         //선택할 캐릭터
         string playerName;
         //info로 넘길 이름값
-        public void MakeName()
+        public void MakeName(PlayerInfo player, Shop shop, Inventory inventory)
         {
             Console.WriteLine("게임에서 사용할 이름을 작성해주세요.");
             playerName = Console.ReadLine();
             Console.Clear();
-            ChoiceClass();
+            ChoiceClass(player,shop,inventory);
         }
 
         enum ClassType
@@ -27,7 +28,7 @@ namespace Adventure
             Wizard = 2,
             Bandit = 3,
         }
-        public void ChoiceClass()
+        public void ChoiceClass(PlayerInfo player, Shop shop, Inventory inventory)
         {
             CreateClass createClass = new CreateClass();
             GoMain goMain = new GoMain();
@@ -49,7 +50,7 @@ namespace Adventure
                         Console.WriteLine("전사를 선택하셨습니다.");
                         player = createClass.warrior();
                         player.Name = playerName;
-                        goMain.mainScence(player);
+                        goMain.mainScence(player,shop,inventory);
                         //CreatClass Warrior랑 MainScence로 넘깁니다. 아래쪽도 동일
                         return;
                     case 2:
@@ -57,14 +58,14 @@ namespace Adventure
                         Console.WriteLine("마법사를 선택하셨습니다.");
                         player = createClass.wizard();
                         player.Name = playerName;
-                        goMain.mainScence(player);
+                        goMain.mainScence(player,shop, inventory);
                         return;
                     case 3:
                         choice = ClassType.Bandit;
                         Console.WriteLine("도적를 선택하셨습니다.");
                         player = createClass.bandit();
                         player.Name = playerName;
-                        goMain.mainScence(player);
+                        goMain.mainScence(player,shop, inventory);
                         return;
                     default:
                         if (input != 1 && input != 3)
