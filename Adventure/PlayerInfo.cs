@@ -13,6 +13,7 @@ namespace Adventure
         GoMain main;
         Inventory inventory = new Inventory();
         Shop shop = new Shop();
+
         public string Name { get; set; }
         public string Job { get; set; }
         public int Lv { get; set; }
