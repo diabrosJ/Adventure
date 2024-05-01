@@ -23,6 +23,7 @@ namespace Adventure
         public int Mp { get; set; }
 
         public PlayerInfo(string name, string job,int lv, int str, int def, int hp, int mp, int gold)
+
         { //생성자 < 
 
             Name = name;
