@@ -10,6 +10,7 @@ namespace Adventure
 {
     public class Shop
     {
+        //GoMain goMain = new GoMain();
 
         //GoMain goMain;
         public List<Item> availableItems;
@@ -21,12 +22,12 @@ namespace Adventure
             //가격,추가 공격력, 추가 방어력, 추가 체력, 추가 마나 순서
             availableItems = new List<Item>
             {
-                new Item("아이템1","아이템이 주는 스탯 | 아이템 설명 ", 1000,10,5,50,20),
-                new Item("아이템2","아이템이 주는 스탯 | 아이템 설명 ", 2000,20,10,100,30),
-                new Item("아이템3","아이템이 주는 스탯 | 아이템 설명 ", 3000,45,15,200,60),
-                new Item("아이템4","아이템이 주는 스탯 | 아이템 설명 ", 4000,80,50,250,80),
-                new Item("아이템5","아이템이 주는 스탯 | 아이템 설명 ", 5000,100,70,270,100),
-                new Item("아이템6","아이템이 주는 스탯 | 아이템 설명 ", 6000,150,80,300,120),
+                new Item("아이템1","아이템이 주는 스탯 | 아이템 설명 ", 100,10,5,50,20),
+                new Item("아이템2","아이템이 주는 스탯 | 아이템 설명 ", 200,20,10,100,30),
+                new Item("아이템3","아이템이 주는 스탯 | 아이템 설명 ", 300,45,15,200,60),
+                new Item("아이템4","아이템이 주는 스탯 | 아이템 설명 ", 400,80,50,250,80),
+                new Item("아이템5","아이템이 주는 스탯 | 아이템 설명 ", 500,100,70,270,100),
+                new Item("아이템6","아이템이 주는 스탯 | 아이템 설명 ", 600,150,80,300,120),
 
            };
         }
@@ -52,22 +53,26 @@ namespace Adventure
             if (player.Gold >=item.Price && !item.IsPurchased)
             {
                 //플레이어 골드 조정 메서드(-item.Price) 아이템 가격만큼 재화를 차감
+                player.AdjustGold(-item.Price);
                 item.IsPurchased = true; // 아이템 구매 상태 변경
                 return true;
             }
+            else
             return false;
         }
 
         //아이템 판매 메커니즘 메서드
         public void SellItem(PlayerInfo player, Item item)
         {
-            int sellPrice = (int)(item.Price * 100); //판매가격
+            int sellPrice = (int)(item.Price); //판매가격
             //플레이어 골드 조정 메서드(sellPrice);
+            player.AdjustGold(sellPrice);
             item.IsPurchased = false;
 
             if (item.IsEquipped)
             {
                 //플레이어 장비 해제 메서드(item);
+                player.UnequipItem(item);
                 item.IsEquipped = false;
 
             }
@@ -126,7 +131,8 @@ namespace Adventure
                         exitShop = true;
                         break;
                     case 0:
-                        //goMain.mainScene();
+                        player.Info();
+                        //goMain.mainScence(player);
                         exitShop = true;
                         break;
 
@@ -152,6 +158,7 @@ namespace Adventure
                 Thread.Sleep(2000);
                 return;
             }
+           
             //구매 가능한 모든 아이템에 대해서 반복
             for (int i = 0; i < availableItems.Count; i++)
             {
@@ -159,8 +166,9 @@ namespace Adventure
                 string purchased = availableItems[i].IsPurchased ? "구매완료" : $"{availableItems[i].Price} G";
                 Console.WriteLine($"{i + 1}. {availableItems[i].Name} | {availableItems[i].Description} | {purchased}");
             }
-
-            Console.WriteLine("0.나가기") ;
+            
+                Console.WriteLine();
+                Console.WriteLine("0.나가기") ;
                 Console.WriteLine();
                 Console.WriteLine("원하시는 아이템을 선택해주세요: ");
 
@@ -171,8 +179,8 @@ namespace Adventure
                 {
                     Console.Clear();
                     Console.WriteLine("잘못된 입력입니다.");
-                Thread.Sleep(1000);
-                    return;
+                    Thread.Sleep(1000);
+                    BuyItemShop(player,shop,inventory);
                 }
 
                 //선택한 아이템의 인덱스 조정
@@ -180,7 +188,8 @@ namespace Adventure
 
                 if (selectedIndex == -1)
                 {
-                    return;
+                    //뒤로가기
+                    VisitShop(player,shop,inventory);
 
                 }
                 else if (selectedIndex >= 0 && selectedIndex < availableItems.Count)
@@ -189,15 +198,19 @@ namespace Adventure
                     Item selected = availableItems[selectedIndex];
 
                     //구매 성공 여부
-                    bool purchased = shop.IsPurchaseItem(player, selected);
+                    bool purchased = IsPurchaseItem(player, selected);
 
                     //구매했다면
                     if (purchased)
                     {
+                    //Console.Clear();
+                    Console.WriteLine("구매 성공!");
+                    Thread.Sleep(1000);
                         //인벤토리에 아이템 추가
                         inventory.AddItem(selected);
                         //구매 할 수 있는 아이템 목록에서 제거
                         availableItems.Remove(selected);
+                    BuyItemShop(player, shop, inventory);
                     }
                     else
                     {
@@ -207,7 +220,7 @@ namespace Adventure
                     }
                 }
 
-            }
+        }
 
 
  
@@ -226,12 +239,12 @@ namespace Adventure
             {
                 Console.WriteLine("보유 중인 아이템이 없습니다.");
                 Thread.Sleep(2000);
-                return;
+                VisitShop(player,shop,inventory);
             }
 
             for (int i = 0; i < playerItems.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {playerItems[i].Name} | {playerItems[i].Price * 100} G"); //판매 가격 표시 추후 조정
+                Console.WriteLine($"{i + 1}. {playerItems[i].Name} | {playerItems[i].Price} G"); //판매 가격 표시 추후 조정
             }
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
