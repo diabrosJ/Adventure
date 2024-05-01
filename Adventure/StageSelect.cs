@@ -2,7 +2,7 @@
 
 internal class StageSelect
 {
-    public void StageSelectMenu(PlayerInfo info)
+    public void StageSelectMenu(PlayerInfo info,Shop shop, Inventory inventory)
     {
         Console.Clear();
 
@@ -16,7 +16,7 @@ internal class StageSelect
         switch (input)
         {
             case 1:
-                info.Info(info);
+                info.Info(info,shop,inventory);
                 //playerinfo.info 진입
                 break;
             case 2:

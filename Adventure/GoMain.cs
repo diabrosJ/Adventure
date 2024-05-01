@@ -13,7 +13,7 @@ namespace Adventure
         PlayerInfo playerinfo;
         CharCustom player;
         StageSelect stageselect = new StageSelect();
-        public void mainScence(PlayerInfo _playerinfo)
+        public void mainScence(PlayerInfo _playerinfo, Shop shop, Inventory inventory)
         {
 
             while (true)
@@ -33,11 +33,11 @@ namespace Adventure
                 switch (input)
                 {
                     case 1:
-                        playerinfo.Info(playerinfo);
+                        playerinfo.Info(playerinfo, shop, inventory);
                         //플레이어 정보창으로 넘어가기
                         break;
                     case 2:
-                        stageselect.StageSelectMenu(playerinfo);
+                        stageselect.StageSelectMenu(playerinfo,shop,inventory);
                         //나중에 getindungeon으로 넘길겁니다. (임시)
                         break;
                     case 3:

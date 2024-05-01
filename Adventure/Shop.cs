@@ -131,7 +131,7 @@ namespace Adventure
                         exitShop = true;
                         break;
                     case 0:
-                        player.Info(player);
+                        player.Info(player, shop, inventory);
                         //goMain.mainScence(player);
                         exitShop = true;
                         break;

@@ -49,7 +49,7 @@ namespace Adventure
             equippedItems = new List<Item>();
             //장착한 아이템 목록
         }
-        public void Info(PlayerInfo player)
+        public void Info(PlayerInfo player, Shop shop, Inventory inventory)
         {
             Console.Clear();
             while (true)
@@ -75,7 +75,7 @@ namespace Adventure
                         Console.Clear();
                         return;
                     case 2:
-                        inventory.GetItems();
+                        inventory.ShowInventory(player, shop, inventory); //<< 수정 완료
                         //인벤토리로 바로 들어가는거 확인했습니다
                         //return 바로 메인으로 갑니다.
                         //저장된 아이템이 등록과 확인이 되는지 부탁드립니다.
