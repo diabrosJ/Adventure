@@ -38,9 +38,8 @@ namespace Adventure
                 Console.WriteLine("[1] 전사");
                 Console.WriteLine("[2] 마법사");
                 Console.WriteLine("[3] 도적");
-                int input;
                 ClassType choice;
-                int.TryParse(Console.ReadLine(), out input);
+                int.TryParse(Console.ReadLine(), out int input);
                 Console.Clear();
                 switch (input)
                 {

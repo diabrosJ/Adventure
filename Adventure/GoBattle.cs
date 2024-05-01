@@ -11,8 +11,9 @@ internal class GoBattle
         Console.WriteLine("3. 스킬 사용");
         Console.WriteLine("4. 아이템 사용");
 
-        int choice = ConsoleUitility.PromptMenuCholce(1, 4);
-        switch (choice)
+        int.TryParse(Console.ReadLine(), out int input);
+
+        switch(input)
         {
             //case 1:
             //    MonsterInfo();

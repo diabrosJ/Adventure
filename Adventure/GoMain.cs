@@ -28,8 +28,8 @@ namespace Adventure
                 //던전으로 넘어가기
                 Console.WriteLine(" 3. visitshop");
                 //상점으로 넘어가기
-                int input;
-                int.TryParse(Console.ReadLine(), out input);
+
+                int.TryParse(Console.ReadLine(), out int input);
                 switch (input)
                 {
                     case 1:

@@ -10,8 +10,8 @@
         Console.WriteLine("2. 스테이지 선택");
         Console.WriteLine("3. 메인 메뉴");
 
-        int choice = ConsoleUitility.PromptMenuCholce(1, 3);
-        switch (choice)
+        int.TryParse(Console.ReadLine(), out int input);
+        switch (input)
         {
             case 1:
 
@@ -32,9 +32,8 @@
         Console.WriteLine("1. 1스테이지\n");
         Console.WriteLine("2. 2스테이지\n");
         Console.WriteLine("3. 3스테이지\n");
-
-        int choice = ConsoleUitility.PromptMenuCholce(1, 3);
-        switch (choice)
+        int.TryParse(Console.ReadLine(), out int input);
+        switch (input)
         {
             case 1:
                 Stage1();
@@ -44,6 +43,16 @@
                 break;
             case 3:
                 Stage3();
+                break;
+            default:
+                if (input != 1 && input != 3)
+                {
+                    Console.WriteLine("잘못 입력하셨습니다.");
+                    Console.WriteLine("다시 입력해주세요.");
+                    Console.WriteLine("2초후 다시 선택창으로 넘어갑니다.");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+                }
                 break;
         }
     }
