@@ -1,4 +1,5 @@
 ﻿using Adventure;
+using Adventure.Charter.UI;
 
 internal class StageSelect
 {
@@ -30,6 +31,9 @@ internal class StageSelect
     }
     public void StageMenu()
     {
+        BattleStage battleStage = new BattleStage();
+        MonsterInfo monsterInfo = new MonsterInfo();
+
         Console.Clear();
         Console.WriteLine("스테이지를 선택해주세요 \n");
         Console.WriteLine("1. 1스테이지\n");
@@ -41,14 +45,14 @@ internal class StageSelect
         switch (input)
         {
             case 1:
-                Stage1();
+                battleStage.getBattle(monsterInfo);
                 break;
-            case 2:
-                Stage2();
-                break;
-            case 3:
-                Stage3();
-                break;
+            //case 2:
+            //    Stage2();
+            //    break;
+            //case 3:
+            //    Stage3();
+            //    break;
             default:
                 if (input != 1 && input != 3)
                 {

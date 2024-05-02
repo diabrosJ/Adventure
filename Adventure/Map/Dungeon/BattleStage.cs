@@ -9,7 +9,8 @@ namespace Adventure
 {
     internal class BattleStage
     {
-        public void getBattle()
+        CreateMonster monster;
+        public void getBattle(MonsterInfo monsterInfo)
         {
             Console.Clear();
 
@@ -24,11 +25,11 @@ namespace Adventure
             switch (input)
             {
                 case 1:
-                    monsterInfo.Info();
+                    monsterInfo.Info(monster);
                     break;
-                case 2:
-                    UseAttack();
-                    break;
+                //case 2:
+                //    UseAttack();
+                //    break;
                     //case 3:
                     //    UseSkill();
                     //    break;

@@ -16,20 +16,14 @@ namespace Adventure.Charter.UI
             Console.Clear();
             while (true)
             {
-                Console.WriteLine($"직업 : {Job}");
-                Console.WriteLine($"Lv : {Lv}");
-                Console.WriteLine($"공격력 : {Str}");
-                Console.WriteLine($"방어력 : {Def}");
-                Console.WriteLine($"체력 : {Hp}");
-                Console.WriteLine("1. 이전 메뉴로");
-
+                Console.WriteLine(monster);
 
                 int.TryParse(Console.ReadLine(), out int input);
                 switch (input)
                 {
                     case 1:
                         Console.Clear();
-                        battle.getBattle();
+                        battle.getBattle(monsterInfo);
                         return;
                     default:
                         if (input != 1 && input != 3)
