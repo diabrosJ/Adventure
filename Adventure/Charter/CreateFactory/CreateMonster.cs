@@ -1,6 +1,6 @@
 ﻿using Adventure;
 
-internal class MonsterInfo
+internal class CreateMonster
 {
     PlayerInfo monster;
     //호출시켜야할 몬스터 내용은 이걸로 불러주세요
