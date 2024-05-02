@@ -8,8 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Map\" />
-    <Folder Include="Charter\" />
+    <Folder Include="Charter\Skill\" />
   </ItemGroup>
 
 </Project>
