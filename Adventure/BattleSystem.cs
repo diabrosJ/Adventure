@@ -30,7 +30,7 @@ namespace Adventure
 
         public void StartBattle(PlayerInfo plyaer, Shop shop, Inventory inventory)
         {
-            
+            Console.Clear();
             Console.WriteLine("전투 시작!!");
 
             //랜덤하게 몬스터 생성
@@ -60,7 +60,7 @@ namespace Adventure
             while (true)
             {
                 //플레이어의 턴
-                PlayerTurn( player, shop, inventory);
+                PlayerTurn( player,monsters);
 
                 //몬스터가 모두 죽었는지 확인
                 bool allMonsterDead = true;
@@ -79,6 +79,7 @@ namespace Adventure
                     break;
                 }
 
+                
                 MonsterTurn(monsters);
 
                 //플레이어가 죽었는지 확인
@@ -92,10 +93,11 @@ namespace Adventure
 
         }
 
-        private void PlayerTurn(PlayerInfo player, Shop shop, Inventory inventory)
+        private void PlayerTurn(PlayerInfo player, PlayerInfo[] monsters)
         {
+            Console.WriteLine();
             Console.WriteLine("[내 정보]");
-            Console.WriteLine($"Lv.{player.Lv} {player.Name} ({player.Job}");
+            Console.WriteLine($"Lv.{player.Lv} {player.Name} ({player.Job})");
             Console.WriteLine($"HP : {player.Hp}");
             Console.WriteLine($"MP : {player.Mp}");
             Console.WriteLine();
@@ -108,9 +110,11 @@ namespace Adventure
             {
                 case 1:
                     //공격
+                    Attack(monsters);
                     break;
                 case 2:
                     //스킬 사용
+                    UseSkill();
                     break;
                 default:
                     Console.WriteLine("잘못된 입력입니다.");
@@ -172,10 +176,11 @@ namespace Adventure
             //해당 직업의 스킬 사용 구현
             if(player.Job == "전사")
             {
+                Console.WriteLine();
                 Console.WriteLine("**스킬 목록**");
-                Console.WriteLine("1. 스킬 이름 - MP ??");
+                Console.WriteLine("1. 전사 스킬 이름 - MP ??");
                 Console.WriteLine("--스킬 효과 설명--");
-                Console.WriteLine("2. 스킬 이름 - MP ??");
+                Console.WriteLine("2. 전사 스킬 이름 - MP ??");
                 Console.WriteLine("--스킬 효과 설명--");
                 Console.WriteLine();
                 Console.WriteLine("사용할 스킬을 선택하세요.");
@@ -198,10 +203,11 @@ namespace Adventure
             }
             else if(player.Job == "마법사")
             {
+                Console.WriteLine();
                 Console.WriteLine("**스킬 목록**");
-                Console.WriteLine("1. 스킬 이름 - MP ??");
+                Console.WriteLine("1. 마법사 스킬 이름 - MP ??");
                 Console.WriteLine("--스킬 효과 설명--");
-                Console.WriteLine("2. 스킬 이름 - MP ??");
+                Console.WriteLine("2.마법사 스킬 이름 - MP ??");
                 Console.WriteLine("--스킬 효과 설명--");
                 Console.WriteLine();
                 Console.WriteLine("사용할 스킬을 선택하세요.");
@@ -224,10 +230,11 @@ namespace Adventure
             }
             else if(player.Job == "도적")
             {
+                Console.WriteLine();
                 Console.WriteLine("**스킬 목록**");
-                Console.WriteLine("1. 스킬 이름 - MP ??");
+                Console.WriteLine("1.도적 스킬 이름 - MP ??");
                 Console.WriteLine("--스킬 효과 설명--");
-                Console.WriteLine("2. 스킬 이름 - MP ??");
+                Console.WriteLine("2.도적 스킬 이름 - MP ??");
                 Console.WriteLine("--스킬 효과 설명--");
                 Console.WriteLine();
                 Console.WriteLine("사용할 스킬을 선택하세요.");
@@ -253,11 +260,12 @@ namespace Adventure
 
         private void MonsterTurn(PlayerInfo[] monsters)
         {
+            Console.WriteLine("몬스터 공격!");
             foreach(var monster in monsters)
             {
                 if(monster.Hp <= 0)
                 {
-                    continue;
+                    //continue;
 
                     //몬스터가 플레이어 공격
                     int baseDamage = monster.Str;
