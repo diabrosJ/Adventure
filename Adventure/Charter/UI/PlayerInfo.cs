@@ -21,10 +21,12 @@ namespace Adventure
         public int Def { get; set; }
         public int Hp { get; set; }
         public int Gold { get; set; }
-        public int menu { get; set; }
         public int Mp { get; set; }
 
         private List<Item> equippedItems;
+
+        List<SKill> sKill;
+
 
         public PlayerInfo(string name, string job,int lv, int str, int def, int hp, int mp, int gold)
 
@@ -49,6 +51,27 @@ namespace Adventure
 
             equippedItems = new List<Item>();
             //장착한 아이템 목록
+            sKill = new List<SKill>();
+            //스킬 목록
+
+            if (Job == "전사")
+            {
+                sKill.Add(new SKill("전사스킬1", 10, 10));
+                sKill.Add(new SKill("전사스킬2", 10, 10));
+                sKill.Add(new SKill("전사스킬3", 10, 10));
+            }
+            else if(Job == "마법사")
+            {
+                sKill.Add(new SKill("마법사스킬1", 10, 10));
+                sKill.Add(new SKill("마법사스킬2", 10, 10));
+                sKill.Add(new SKill("마법사스킬3", 10, 10));
+            }
+            else
+            {
+                sKill.Add(new SKill("도적스킬1", 10, 10));
+                sKill.Add(new SKill("도적스킬2", 10, 10));
+                sKill.Add(new SKill("도적스킬3", 10, 10));
+            }
         }
         public void Info(PlayerInfo player, Shop shop, Inventory inventory)
         {
@@ -62,9 +85,12 @@ namespace Adventure
                 Console.WriteLine($"방어력 : {Def}");
                 Console.WriteLine($"체력 : {Hp}");
                 Console.WriteLine($"마력 : {Mp}");
-                Console.WriteLine($"골드 : {Gold}");
-                Console.WriteLine("");
-                Console.WriteLine("1. 이전 메뉴로");
+                Console.WriteLine($"골드 : {Gold}\n");
+                for (int i = 0; i < sKill.Count; i++)
+                {
+                    Console.WriteLine($"스킬이름: {sKill[i].Name} 스킬공격력: {sKill[i].Str} 스킬소모값: {sKill[i].Mp} ");
+                }
+                Console.WriteLine("\n1. 이전 메뉴로");
                 Console.WriteLine("2. 인벤토리");
                 Console.WriteLine("3. 상점 입장하기");
                 
