@@ -56,19 +56,19 @@ namespace Adventure
                         monsters[i] = Monster.Monsters["Minion"];
                         break;
                 }
-            }
-
-            Console.WriteLine("[몬스터 정보]");
-            foreach (var monster in monsters)
-            {
-                Console.WriteLine($"Lv.{monster.Level} {monster.Name} HP: {monster.Hp}");
-            }
-            Console.WriteLine();
+            }          
 
             while (true)
             {
+                Console.WriteLine("[몬스터 정보]");
+                foreach (var monster in monsters)
+                {
+                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} HP: {monster.Hp}");
+                }
+                Console.WriteLine();
+
                 //플레이어의 턴
-                PlayerTurn( player, shop, inventory);
+                PlayerTurn( player, shop, inventory,monsters);
 
                 //몬스터가 모두 죽었는지 확인
                 bool allMonsterDead = true;
@@ -87,6 +87,8 @@ namespace Adventure
                     break;
                 }
 
+              
+
                 MonsterTurn(monsters);
 
                 //플레이어가 죽었는지 확인
@@ -100,7 +102,7 @@ namespace Adventure
 
         }
 
-        private void PlayerTurn(PlayerInfo player, Shop shop, Inventory inventory)
+        private void PlayerTurn(PlayerInfo player, Shop shop, Inventory inventory, CreateMonster[] monsters)
         {
             Console.WriteLine("[내 정보]");
             Console.WriteLine($"Lv.{player.Lv} {player.Name} ({player.Job}");
@@ -115,12 +117,13 @@ namespace Adventure
             switch( choice )
             {
                 case 1:
-                    //Attack(monsters[1]);
+                    Attack(monsters);
                     Thread.Sleep(1000);
                     Console.Clear();
                     break;
                 case 2:
                     //스킬 사용
+                    UseSkill();
                     break;
                 default:
                     Console.WriteLine("잘못된 입력입니다.");
