@@ -1,27 +1,18 @@
 ﻿using Adventure;
-
-internal class CreateMonster
+using System.Threading;
+using System.Collections.Generic;
+public class CreateMonster
 {
-    PlayerInfo monster;
-    //호출시켜야할 몬스터 내용은 이걸로 불러주세요
+    public string Name { get; }
+    public int Level { get; }
+    public int Hp { get; set; }
+    public int Atk { get; }
 
-    public PlayerInfo Minion()
+    public CreateMonster(string name, int level, int hp, int atk)
     {
-        monster = new PlayerInfo("", "미니언", 1, 10, 0, 50, 0, 10);
-        // 몬스터 이름, 레벨, 공격력, 방어력, 체력, 마나, 골드
-        return monster;
+        Name = name;
+        Level = level;
+        Hp = hp;
+        Atk = atk;
     }
-    public PlayerInfo canonMinion()
-    {
-        monster = new PlayerInfo("", "대포 미니언", 1, 10, 0, 50, 0, 10);
-        // 몬스터 이름, 레벨, 공격력, 방어력, 체력, 마나, 골드
-        return monster;
-    }
-    public PlayerInfo goBlin()
-    {
-        monster = new PlayerInfo("", "고블린", 1, 10, 0, 50, 0, 10);
-        // 몬스터 이름, 레벨, 공격력, 방어력, 체력, 마나, 골드
-        return monster;
-    }
-
 }
