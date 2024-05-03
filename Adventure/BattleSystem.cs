@@ -17,7 +17,7 @@ namespace Adventure
 
         private Random random;
 
-        public BattleSystem(PlayerInfo player, WarriorSkills warriorSkills, WizardSkills wizardSkills, BanditSkills banditSkills)
+        public BattleSystem(PlayerInfo player, Shop shop, Inventory inventory, WarriorSkills warriorSkills, WizardSkills wizardSkills, BanditSkills banditSkills)
         {
             this.player = player;
             this.warriorSkills = warriorSkills;
@@ -28,8 +28,9 @@ namespace Adventure
 
         }
 
-        public void StartBattle()
+        public void StartBattle(PlayerInfo plyaer, Shop shop, Inventory inventory)
         {
+            
             Console.WriteLine("전투 시작!!");
 
             //랜덤하게 몬스터 생성
@@ -59,7 +60,7 @@ namespace Adventure
             while (true)
             {
                 //플레이어의 턴
-                PlayerTurn(player);
+                PlayerTurn( player, shop, inventory);
 
                 //몬스터가 모두 죽었는지 확인
                 bool allMonsterDead = true;
@@ -91,7 +92,7 @@ namespace Adventure
 
         }
 
-        private void PlayerTurn(PlayerInfo player)
+        private void PlayerTurn(PlayerInfo player, Shop shop, Inventory inventory)
         {
             Console.WriteLine("[내 정보]");
             Console.WriteLine($"Lv.{player.Lv} {player.Name} ({player.Job}");

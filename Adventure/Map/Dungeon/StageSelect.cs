@@ -1,10 +1,16 @@
 ﻿using Adventure;
 using Adventure.Charter.UI;
+using System.Numerics;
 
 internal class StageSelect
 {
+    private PlayerInfo player;
+    private WarriorSkills warriorSkills;
+    private WizardSkills wizardSkills;
+    private BanditSkills banditSkills;
     public void StageSelectMenu(PlayerInfo info,Shop shop, Inventory inventory)
     {
+
         Console.Clear();
 
         Console.WriteLine("던전 입구입니다 아래 메뉴에서 선택해주세요");
@@ -21,7 +27,7 @@ internal class StageSelect
                 //playerinfo.info 진입
                 break;
             case 2:
-                StageMenu();
+                StageMenu(info, shop, inventory);
                 break;
             case 3:
                 Console.Clear();
@@ -29,10 +35,11 @@ internal class StageSelect
         }
 
     }
-    public void StageMenu()
+    public void StageMenu(PlayerInfo _playerinfo, Shop shop, Inventory inventory)
     {
         BattleStage battleStage = new BattleStage();
         MonsterInfo monsterInfo = new MonsterInfo();
+        BattleSystem battleSystem = new BattleSystem(_playerinfo,shop, inventory, warriorSkills, wizardSkills, banditSkills);
 
         Console.Clear();
         Console.WriteLine("스테이지를 선택해주세요 \n");
@@ -47,12 +54,12 @@ internal class StageSelect
             case 1:
                 battleStage.getBattle(monsterInfo);
                 break;
-            //case 2:
-            //    Stage2();
-            //    break;
-            //case 3:
-            //    Stage3();
-            //    break;
+                case 2:
+                battleSystem.StartBattle(_playerinfo, shop, inventory);
+                break;
+            case 3:
+                _playerinfo.Info(_playerinfo, shop, inventory);
+                break;
             default:
                 if (input != 1 && input != 3)
                 {
