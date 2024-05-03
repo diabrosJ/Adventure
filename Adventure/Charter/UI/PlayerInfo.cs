@@ -23,6 +23,7 @@ namespace Adventure
         public int Gold { get; set; }
         public int menu { get; set; }
         public int Mp { get; set; }
+        public ISkill Skill { get; set; }
 
         private List<Item> equippedItems;
 

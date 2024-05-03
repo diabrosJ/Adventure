@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Adventure
@@ -12,8 +13,9 @@ namespace Adventure
         Shop shop = new Shop();
         PlayerInfo playerinfo;
         CharCustom player;
+
         StageSelect stageselect = new StageSelect();
-        public void mainScence(PlayerInfo _playerinfo, Shop shop, Inventory inventory)
+        public void mainScence(PlayerInfo _playerinfo, Shop shop, Inventory inventory, PlayerInfo monster)
         {
 
             while (true)
@@ -37,7 +39,7 @@ namespace Adventure
                         //플레이어 정보창으로 넘어가기
                         break;
                     case 2:
-                        stageselect.StageSelectMenu(playerinfo,shop,inventory);
+                        stageselect.StageSelectMenu(playerinfo,shop,inventory, monster);
                         //나중에 getindungeon으로 넘길겁니다. (임시)
                         break;
                     case 3:

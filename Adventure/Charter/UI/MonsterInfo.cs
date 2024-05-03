@@ -11,7 +11,8 @@ namespace Adventure.Charter.UI
     {
         MonsterInfo monsterInfo;
         BattleStage battle;
-        public void Info(CreateMonster monster)
+        PlayerInfo player;
+        public void Info(CreateMonster monster, PlayerInfo info, Shop shop, Inventory inventory)
         {
             Console.Clear();
             while (true)
@@ -23,7 +24,7 @@ namespace Adventure.Charter.UI
                 {
                     case 1:
                         Console.Clear();
-                        battle.getBattle(monsterInfo);
+                        battle.getBattle(monsterInfo, info, shop, inventory);
                         return;
                     default:
                         if (input != 1 && input != 3)

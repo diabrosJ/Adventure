@@ -13,7 +13,7 @@ namespace Adventure
 
    
             CharCustom charCustom = new CharCustom();
-            charCustom.MakeName(player,shop,inventory);
+            charCustom.MakeName(player,shop,inventory, monster);
 
             //시작후 CharCustom으로 넘길 예정
 

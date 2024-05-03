@@ -11,18 +11,13 @@ namespace Adventure
     {
         private PlayerInfo player;
         private CreateMonster monster;
-        private WarriorSkills warriorSkills;
-        private WizardSkills wizardSkills;
-        private BanditSkills banditSkills;
+      
 
         private Random random;
 
-        public BattleSystem(PlayerInfo player, WarriorSkills warriorSkills, WizardSkills wizardSkills, BanditSkills banditSkills)
+        public BattleSystem(PlayerInfo player)
         {
             this.player = player;
-            this.warriorSkills = warriorSkills;
-            this.wizardSkills = wizardSkills;
-            this.banditSkills = banditSkills;
             monster = new CreateMonster();
             random = new Random();
 

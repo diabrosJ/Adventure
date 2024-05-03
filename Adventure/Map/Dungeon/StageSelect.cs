@@ -1,9 +1,13 @@
 ﻿using Adventure;
 using Adventure.Charter.UI;
+using System.Numerics;
+using System.Threading;
 
 internal class StageSelect
 {
-    public void StageSelectMenu(PlayerInfo info,Shop shop, Inventory inventory)
+    private PlayerInfo player;
+    private CreateMonster createMonster;
+    public void StageSelectMenu(PlayerInfo info,Shop shop, Inventory inventory, PlayerInfo monster)
     {
         Console.Clear();
 
@@ -21,7 +25,7 @@ internal class StageSelect
                 //playerinfo.info 진입
                 break;
             case 2:
-                StageMenu();
+                StageMenu(info, shop, inventory, monster);
                 break;
             case 3:
                 Console.Clear();
@@ -29,10 +33,12 @@ internal class StageSelect
         }
 
     }
-    public void StageMenu()
+    public void StageMenu(PlayerInfo info, Shop shop, Inventory inventory, PlayerInfo monster)
     {
-        BattleStage battleStage = new BattleStage();
+        
         MonsterInfo monsterInfo = new MonsterInfo();
+        BattleStage battleStage = new BattleStage(player, createMonster);
+        BattleSystem battleSystem = new BattleSystem(player);
 
         Console.Clear();
         Console.WriteLine("스테이지를 선택해주세요 \n");
@@ -45,7 +51,8 @@ internal class StageSelect
         switch (input)
         {
             case 1:
-                battleStage.getBattle(monsterInfo);
+                PlayerInfo minionMonster = createMonster.Minion();
+                battleStage.getBattle(monsterInfo,info, shop, inventory, monster);
                 break;
             //case 2:
             //    Stage2();
