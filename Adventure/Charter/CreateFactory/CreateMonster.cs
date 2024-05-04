@@ -15,4 +15,12 @@ public class CreateMonster
         Hp = hp;
         Atk = atk;
     }
+
+    public CreateMonster(CreateMonster other) 
+    {
+        Name = other.Name;
+        Level = other.Level;
+        Hp=other.Hp;
+        Atk = other.Atk;    
+    }
 }

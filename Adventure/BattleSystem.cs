@@ -44,22 +44,23 @@ namespace Adventure
                 switch(monsterType)
                 {
                     case 1:
-                        monsters[i] = (Monster.Monsters["CannonMinion"]);
+                        monsters[i] =new CreateMonster(Monster.Monsters["CannonMinion"]);
                         break;
                     case 2:
-                        monsters[i] = Monster.Monsters["MeleeMinion"];
+                        monsters[i] =new CreateMonster(Monster.Monsters["MeleeMinion"]);
                         break;
                     case 3:
-                        monsters[i] = Monster.Monsters["Voidling"];
+                        monsters[i] =new CreateMonster( Monster.Monsters["Voidling"]);
                         break;
                         default:
-                        monsters[i] = Monster.Monsters["Minion"];
+                        monsters[i] =new CreateMonster( Monster.Monsters["Minion"]);
                         break;
                 }
             }          
 
             while (true)
             {
+                Console.WriteLine();
                 Console.WriteLine("[몬스터 정보]");
                 foreach (var monster in monsters)
                 {
@@ -84,11 +85,15 @@ namespace Adventure
                 if(allMonsterDead) 
                 {
                     //전투 결과 호출 -승리
+                    Console.Clear();
+                    Console.WriteLine("**승리**");
+                    Thread.Sleep(1000);
+                    Console.Clear();
                     break;
                 }
 
-              
 
+                Console.Clear();
                 MonsterTurn(monsters);
 
                 //플레이어가 죽었는지 확인
@@ -105,7 +110,7 @@ namespace Adventure
         private void PlayerTurn(PlayerInfo player, Shop shop, Inventory inventory, CreateMonster[] monsters)
         {
             Console.WriteLine("[내 정보]");
-            Console.WriteLine($"Lv.{player.Lv} {player.Name} ({player.Job}");
+            Console.WriteLine($"Lv.{player.Lv} {player.Name} ({player.Job})");
             Console.WriteLine($"HP : {player.Hp}");
             Console.WriteLine($"MP : {player.Mp}");
             Console.WriteLine();
@@ -134,6 +139,7 @@ namespace Adventure
 
         private void Attack(CreateMonster[] monsters)
         {
+            Console.WriteLine();
             Console.WriteLine("공격할 몬스터 선택: ");
 
             //몬스터 리스트 출력
@@ -142,6 +148,7 @@ namespace Adventure
                 Console.WriteLine($"{i + 1}. {monsters[i].Name} - HP : {monsters[i].Hp}");
             }
             Console.WriteLine();
+            
             int targetIndex = int.Parse( Console.ReadLine() ) - 1;
 
             if(targetIndex < 0 || targetIndex >= monsters.Length)
@@ -268,10 +275,10 @@ namespace Adventure
         {
             foreach(var monster in monsters)
             {
-                if(monster.Hp <= 0)
+                if(monster.Hp > 0)
                 {
-                    continue;
-
+                    //continue;
+                    //Console.Clear();
                     //몬스터가 플레이어 공격
                     int baseDamage = monster.Atk;
                     int damgage = random.Next((int)(baseDamage * 0.9), (int)(baseDamage * 1.1) + 1);
@@ -279,6 +286,11 @@ namespace Adventure
                     player.Hp -= damgage;
 
                     Console.WriteLine($"{monster.Name} 공격! {player.Name} (은)는 {damgage} 만큼 데미지를 입었다!");
+                    Console.WriteLine();
+                }
+                else
+                {
+                    break;
                 }
             }
         }
