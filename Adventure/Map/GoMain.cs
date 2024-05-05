@@ -19,14 +19,14 @@ namespace Adventure
             while (true)
             {
                 playerinfo = _playerinfo;
-                Console.WriteLine(" 스파르타 던전에 오신 여러분 환영합니다.");
-                Console.WriteLine(" 전투 시작에 앞서 행동을 선택해 주세요. ");
-
-                Console.WriteLine(" 1. 캐릭터 정보");
+                Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.");
+                Console.WriteLine("전투 시작에 앞서 행동을 선택해 주세요. ");
+                Console.WriteLine();
+                Console.WriteLine("1. 캐릭터 정보");
                 //인포창 넘어가기
-                Console.WriteLine(" 2. 던전 입장하기 ");
+                Console.WriteLine("2. 던전 입장하기 ");
                 //던전으로 넘어가기
-                Console.WriteLine(" 3. 상점 입장하기");
+                Console.WriteLine("3. 상점 입장하기");
                 //상점으로 넘어가기
 
                 int.TryParse(Console.ReadLine(), out int input);

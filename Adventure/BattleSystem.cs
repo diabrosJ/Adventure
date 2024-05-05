@@ -13,18 +13,14 @@ namespace Adventure
     {
         private PlayerInfo player;
         private Dictionary<string, Monster> monsters;
-        private WarriorSkills warriorSkills;
-        private WizardSkills wizardSkills;
-        private BanditSkills banditSkills;
+       
 
         private Random random;
 
-        public BattleSystem(PlayerInfo player, Shop shop, Inventory inventory, WarriorSkills warriorSkills, WizardSkills wizardSkills, BanditSkills banditSkills)
+        public BattleSystem(PlayerInfo player, Shop shop, Inventory inventory)
         {
             this.player = player;
-            this.warriorSkills = warriorSkills;
-            this.wizardSkills = wizardSkills;
-            this.banditSkills = banditSkills;
+            
             random = new Random();
 
         }
@@ -64,6 +60,14 @@ namespace Adventure
                 Console.WriteLine("[몬스터 정보]");
                 foreach (var monster in monsters)
                 {
+                    if(monster.Hp <= 0)
+                    {
+                        Console.Write($"Lv.{monster.Level} {monster.Name}");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine(" [DEAD]");
+                        Console.ResetColor();
+                    }
+                    if(monster.Hp>0)
                     Console.WriteLine($"Lv.{monster.Level} {monster.Name} HP: {monster.Hp}");
                 }
                 Console.WriteLine();
@@ -94,7 +98,7 @@ namespace Adventure
 
 
                 Console.Clear();
-                MonsterTurn(monsters);
+                MonsterTurn(monsters,player);
 
                 //플레이어가 죽었는지 확인
 
@@ -109,10 +113,13 @@ namespace Adventure
 
         private void PlayerTurn(PlayerInfo player, Shop shop, Inventory inventory, CreateMonster[] monsters)
         {
+            int playerHP = player.GetEquippedHP();
+            int playerMP = player.GetEquippedMP();
+
             Console.WriteLine("[내 정보]");
             Console.WriteLine($"Lv.{player.Lv} {player.Name} ({player.Job})");
-            Console.WriteLine($"HP : {player.Hp}");
-            Console.WriteLine($"MP : {player.Mp}");
+            Console.WriteLine($"HP : {playerHP}");
+            Console.WriteLine($"MP : {playerMP}");
             Console.WriteLine();
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 스킬 사용");
@@ -145,7 +152,17 @@ namespace Adventure
             //몬스터 리스트 출력
             for(int i = 0; i<monsters.Length; i++) 
             {
-                Console.WriteLine($"{i + 1}. {monsters[i].Name} - HP : {monsters[i].Hp}");
+                if (monsters[i].Hp > 0)
+                {
+                    Console.WriteLine($"{i + 1}. {monsters[i].Name} - HP : {monsters[i].Hp}");
+                }
+                if (monsters[i].Hp < 0)
+                {
+                    Console.Write($"{i + 1}. {monsters[i].Name} : ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("[DEAD]\n");
+                    Console.ResetColor();
+                }
             }
             Console.WriteLine();
             
@@ -168,7 +185,7 @@ namespace Adventure
             }
 
             //공격력 계산
-            int baseDamage = player.Str;
+            int baseDamage = player.GetEquippedAttack();
             int damage= random.Next((int)(baseDamage * 0.9), (int)(baseDamage *1.1) +1);
 
             //몬스터에게 데미지 적용
@@ -271,7 +288,7 @@ namespace Adventure
            
         }
 
-        private void MonsterTurn(CreateMonster[] monsters)
+        private void MonsterTurn(CreateMonster[] monsters,PlayerInfo player)
         {
             foreach(var monster in monsters)
             {
@@ -280,17 +297,24 @@ namespace Adventure
                     //continue;
                     //Console.Clear();
                     //몬스터가 플레이어 공격
+                    int playerDef = (int)player.GetEquippedDefense() /3;
+
                     int baseDamage = monster.Atk;
                     int damgage = random.Next((int)(baseDamage * 0.9), (int)(baseDamage * 1.1) + 1);
+                    
+                    if(damgage - playerDef < 0)
+                    {
+                        damgage = 0;
+                    }
 
-                    player.Hp -= damgage;
+                    player.Hp -= damgage - playerDef;
 
                     Console.WriteLine($"{monster.Name} 공격! {player.Name} (은)는 {damgage} 만큼 데미지를 입었다!");
                     Console.WriteLine();
                 }
                 else
                 {
-                    break;
+                    continue;
                 }
             }
         }

@@ -5,9 +5,7 @@ using System.Numerics;
 internal class StageSelect
 {
     private PlayerInfo player;
-    private WarriorSkills warriorSkills;
-    private WizardSkills wizardSkills;
-    private BanditSkills banditSkills;
+    
     public void StageSelectMenu(PlayerInfo info,Shop shop, Inventory inventory)
     {
 
@@ -39,7 +37,7 @@ internal class StageSelect
     {
         BattleStage battleStage = new BattleStage();
         MonsterInfo monsterInfo = new MonsterInfo();
-        BattleSystem battleSystem = new BattleSystem(_playerinfo,shop, inventory, warriorSkills, wizardSkills, banditSkills);
+        BattleSystem battleSystem = new BattleSystem(_playerinfo,shop, inventory);
 
         Console.Clear();
         Console.WriteLine("스테이지를 선택해주세요 \n");
@@ -52,13 +50,14 @@ internal class StageSelect
         switch (input)
         {
             case 1:
-                battleStage.getBattle(monsterInfo);
+                //battleStage.getBattle(monsterInfo);
+                battleSystem.StartBattle(_playerinfo, shop, inventory);
                 break;
                 case 2:
                 battleSystem.StartBattle(_playerinfo, shop, inventory);
                 break;
             case 3:
-                _playerinfo.Info(_playerinfo, shop, inventory);
+                battleSystem.StartBattle(_playerinfo, shop, inventory);
                 break;
             default:
                 if (input != 1 && input != 3)

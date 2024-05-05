@@ -22,6 +22,11 @@ namespace Adventure
         public int Hp { get; set; }
         public int Gold { get; set; }
         public int Mp { get; set; }
+        //public int equippedHP { get; set; }
+        //public int equippedMP { get; set; }
+        //public int equippedAtk { get; set; }
+        //public int equippedDef { get; set; }
+
 
         private List<Item> equippedItems;
 
@@ -49,6 +54,9 @@ namespace Adventure
             Gold = gold;
             //골드
 
+
+          
+
             equippedItems = new List<Item>();
             //장착한 아이템 목록
             sKill = new List<SKill>();
@@ -75,19 +83,31 @@ namespace Adventure
         }
         public void Info(PlayerInfo player, Shop shop, Inventory inventory)
         {
-            Console.Clear();
-            while (true)
-            {
+            int equippedAtk = GetEquippedAttack();//장비 장착 시 총 공격력
+            int increasedAttack = equippedAtk - player.Str; //장비 장착으로 얻게 된 공격력
+
+            int equippedDef = GetEquippedDefense();//장비 장착 시 총 방어력
+            int increasedDefense = equippedDef - player.Def; //장비 장착으로 얻게 된 방어력
+
+            int equippedHP = GetEquippedHP(); //장비 장착 시 총 체력
+            int increasedHP = equippedHP - player.Hp;
+
+            int equippedMP = GetEquippedMP(); //장비 장착 시 총 마나
+            int increasedMP = equippedMP - player.Mp;
+
+          
+                Console.Clear();
                 Console.WriteLine($"이름 : {Name}");
                 Console.WriteLine($"직업 : {Job}");
                 Console.WriteLine($"Lv : {Lv}");
-                Console.WriteLine($"공격력 : {Str}");
-                Console.WriteLine($"방어력 : {Def}");
-                Console.WriteLine($"체력 : {Hp}");
-                Console.WriteLine($"마력 : {Mp}");
+                Console.WriteLine($"공격력 : {equippedAtk} (+{increasedAttack})");
+                Console.WriteLine($"방어력 : {equippedDef} (+{increasedDefense})");
+                Console.WriteLine($"체력 : {equippedHP} (+{increasedHP})");
+                Console.WriteLine($"마력 : {equippedMP} (+{increasedMP})");
                 Console.WriteLine($"골드 : {Gold}\n");
                 for (int i = 0; i < sKill.Count; i++)
                 {
+                    Console.WriteLine();
                     Console.WriteLine($"스킬이름: {sKill[i].Name} 스킬공격력: {sKill[i].Str} 스킬소모값: {sKill[i].Mp} ");
                 }
                 Console.WriteLine("\n1. 이전 메뉴로");
@@ -100,6 +120,7 @@ namespace Adventure
                 {
                     case 1:
                         Console.Clear();
+                        //main.mainScence(player, shop, inventory); <<버그 수정해야됨
                         return;
                     case 2:
                         inventory.ShowInventory(player, shop, inventory); //<< 수정 완료
@@ -121,7 +142,7 @@ namespace Adventure
                             Console.Clear();
                         }
                         break;
-                }
+                
             }
         }
 
@@ -143,6 +164,29 @@ namespace Adventure
             foreach(var item in equippedItems)
             {
                 total += item.DefenseBonus;
+            }
+            return total;
+        }
+
+        //장착한 아이템을 포함한 총 체력 계산
+        public int GetEquippedHP()
+        {
+            int total = Hp;
+            foreach(var item in equippedItems)
+            {
+                total += item.HpBonus;
+
+            }
+            return total;
+        }
+
+        //장착한 아이템을 포함한 총 마나 계산
+        public int GetEquippedMP() 
+        {
+            int total = Mp;
+            foreach(var item in equippedItems)
+            {
+                total += item.MpBonus;
             }
             return total;
         }

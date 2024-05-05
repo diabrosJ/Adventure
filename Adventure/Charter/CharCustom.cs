@@ -35,11 +35,24 @@ namespace Adventure
 
             while (true)
             {
-
-                Console.WriteLine("직업을 선택해주세요.");
-                Console.WriteLine("[1] 전사");
-                Console.WriteLine("[2] 마법사");
-                Console.WriteLine("[3] 도적");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("****직업을 선택해주세요****");
+                Console.ResetColor();
+                Console.WriteLine();
+                Console.Write("[1] 전사 : ");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("+높은 체력, +높은 방어력, +높은 단일 타겟 공격력");
+                Console.ResetColor();
+                Console.WriteLine();
+                Console.Write("[2] 마법사 : ");
+                Console.ForegroundColor= ConsoleColor.Cyan;
+                Console.WriteLine("+높은 마력, +높은 스킬 공격력, +광역 타겟 공격");
+                Console.ResetColor();
+                Console.WriteLine();
+                Console.Write("[3] 도적 : ");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("+많은 스테이지 클리어 보상, +유틸성이 많은 스킬들");
+                Console.ResetColor(); Console.WriteLine();
                 ClassType choice;
                 int.TryParse(Console.ReadLine(), out int input);
                 Console.Clear();
@@ -47,7 +60,13 @@ namespace Adventure
                 {
                     case 1:
                         choice = ClassType.Warrior;
-                        Console.WriteLine("전사를 선택하셨습니다.");
+                        Console.WriteLine();
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("*********************");
+                        Console.WriteLine("전사를 선택하셨습니다");
+                        Console.WriteLine("*********************");
+                        Console.ResetColor();
+                        Console.WriteLine();
                         player = createClass.warrior();
                         player.Name = playerName;
                         goMain.mainScence(player,shop,inventory);
@@ -55,14 +74,26 @@ namespace Adventure
                         return;
                     case 2:
                         choice = ClassType.Wizard;
-                        Console.WriteLine("마법사를 선택하셨습니다.");
+                        Console.WriteLine();
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("***********************");
+                        Console.WriteLine("마법사를 선택하셨습니다");
+                        Console.WriteLine("***********************");
+                        Console.ResetColor();
+                        Console.WriteLine();
                         player = createClass.wizard();
                         player.Name = playerName;
                         goMain.mainScence(player,shop, inventory);
                         return;
                     case 3:
                         choice = ClassType.Bandit;
-                        Console.WriteLine("도적를 선택하셨습니다.");
+                        Console.WriteLine();
+                        Console.ForegroundColor= ConsoleColor.Green;
+                        Console.WriteLine("*********************");
+                        Console.WriteLine("도적를 선택하셨습니다");
+                        Console.WriteLine("*********************");
+                        Console.ResetColor();
+                        Console.WriteLine();
                         player = createClass.bandit();
                         player.Name = playerName;
                         goMain.mainScence(player,shop, inventory);
