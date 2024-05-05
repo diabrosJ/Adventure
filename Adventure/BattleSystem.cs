@@ -1,5 +1,7 @@
-﻿using Adventure.Charter.UI;
+﻿using Adventure.Charter.CreateFactory;
+using Adventure.Charter.UI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,30 +12,30 @@ namespace Adventure
     public class BattleSystem
     {
         private PlayerInfo player;
-        private CreateMonster monster;
+        private Dictionary<string, Monster> monsters;
         private WarriorSkills warriorSkills;
         private WizardSkills wizardSkills;
         private BanditSkills banditSkills;
 
         private Random random;
 
-        public BattleSystem(PlayerInfo player, WarriorSkills warriorSkills, WizardSkills wizardSkills, BanditSkills banditSkills)
+        public BattleSystem(PlayerInfo player, Shop shop, Inventory inventory, WarriorSkills warriorSkills, WizardSkills wizardSkills, BanditSkills banditSkills)
         {
             this.player = player;
             this.warriorSkills = warriorSkills;
             this.wizardSkills = wizardSkills;
             this.banditSkills = banditSkills;
-            monster = new CreateMonster();
             random = new Random();
 
         }
 
-        public void StartBattle()
+        public void StartBattle(PlayerInfo plyaer, Shop shop, Inventory inventory)
         {
+            Console.Clear();
             Console.WriteLine("전투 시작!!");
 
             //랜덤하게 몬스터 생성
-            PlayerInfo[] monsters = new PlayerInfo[random.Next(1, 5)];
+            CreateMonster[] monsters = new CreateMonster[random.Next(1, 5)];
 
             for (int i= 0; i<monsters.Length; i++)
             {
@@ -42,24 +44,31 @@ namespace Adventure
                 switch(monsterType)
                 {
                     case 1:
-                        monsters[i] = monster.Minion();
+                        monsters[i] = (Monster.Monsters["CannonMinion"]);
                         break;
                     case 2:
-                        monsters[i] = monster.canonMinion(); ;
+                        monsters[i] = Monster.Monsters["MeleeMinion"];
                         break;
                     case 3:
-                        monsters[i] = monster.goBlin();
+                        monsters[i] = Monster.Monsters["Voidling"];
                         break;
                         default:
-                        monsters[i] = monster.Minion() ;
+                        monsters[i] = Monster.Monsters["Minion"];
                         break;
                 }
-            }
+            }          
 
             while (true)
             {
+                Console.WriteLine("[몬스터 정보]");
+                foreach (var monster in monsters)
+                {
+                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} HP: {monster.Hp}");
+                }
+                Console.WriteLine();
+
                 //플레이어의 턴
-                PlayerTurn(player);
+                PlayerTurn( player, shop, inventory,monsters);
 
                 //몬스터가 모두 죽었는지 확인
                 bool allMonsterDead = true;
@@ -78,6 +87,8 @@ namespace Adventure
                     break;
                 }
 
+              
+
                 MonsterTurn(monsters);
 
                 //플레이어가 죽었는지 확인
@@ -91,7 +102,7 @@ namespace Adventure
 
         }
 
-        private void PlayerTurn(PlayerInfo player)
+        private void PlayerTurn(PlayerInfo player, Shop shop, Inventory inventory, CreateMonster[] monsters)
         {
             Console.WriteLine("[내 정보]");
             Console.WriteLine($"Lv.{player.Lv} {player.Name} ({player.Job}");
@@ -106,10 +117,13 @@ namespace Adventure
             switch( choice )
             {
                 case 1:
-                    //공격
+                    Attack(monsters);
+                    Thread.Sleep(1000);
+                    Console.Clear();
                     break;
                 case 2:
                     //스킬 사용
+                    UseSkill();
                     break;
                 default:
                     Console.WriteLine("잘못된 입력입니다.");
@@ -118,7 +132,7 @@ namespace Adventure
             }
         }
 
-        private void Attack(PlayerInfo[] monsters)
+        private void Attack(CreateMonster[] monsters)
         {
             Console.WriteLine("공격할 몬스터 선택: ");
 
@@ -137,7 +151,7 @@ namespace Adventure
                 Attack(monsters);
             }
 
-            PlayerInfo target = monsters[targetIndex];
+            CreateMonster target = monsters[targetIndex];
 
             if(target.Hp <= 0)
             {
@@ -250,7 +264,7 @@ namespace Adventure
            
         }
 
-        private void MonsterTurn(PlayerInfo[] monsters)
+        private void MonsterTurn(CreateMonster[] monsters)
         {
             foreach(var monster in monsters)
             {
@@ -259,7 +273,7 @@ namespace Adventure
                     continue;
 
                     //몬스터가 플레이어 공격
-                    int baseDamage = monster.Str;
+                    int baseDamage = monster.Atk;
                     int damgage = random.Next((int)(baseDamage * 0.9), (int)(baseDamage * 1.1) + 1);
 
                     player.Hp -= damgage;

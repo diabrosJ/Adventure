@@ -33,15 +33,15 @@ namespace Adventure
                 switch (input)
                 {
                     case 1:
-                        playerinfo.Info(playerinfo, shop, inventory);
+                        playerinfo.Info(_playerinfo, shop, inventory);
                         //플레이어 정보창으로 넘어가기
                         break;
                     case 2:
-                        stageselect.StageSelectMenu(playerinfo,shop,inventory);
+                        stageselect.StageSelectMenu(_playerinfo,shop,inventory);
                         //나중에 getindungeon으로 넘길겁니다. (임시)
                         break;
                     case 3:
-                        shop.VisitShop(playerinfo,shop,inventory);
+                        shop.VisitShop(_playerinfo,shop,inventory);
                         //상점
                         break;
                     default:

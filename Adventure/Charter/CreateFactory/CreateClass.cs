@@ -27,7 +27,7 @@ namespace Adventure
         }
         public PlayerInfo bandit()
         {
-            player = new PlayerInfo("", "마법사", 1, 7, 7, 80, 80, 1500);
+            player = new PlayerInfo("", "도적", 1, 7, 7, 80, 80, 1500);
             // 직업, 레벨, 공격력, 방어력,체력,마나,골드
             return player;
         }
