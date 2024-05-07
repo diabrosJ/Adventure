@@ -275,7 +275,7 @@ namespace Adventure
                 Console.WriteLine("잘못된 입력입니다.");
                 SellItemShop(player,shop,inventory);  
                 Thread.Sleep(2000);
-                return;
+    
             }
 
             selectedIndex--;
@@ -289,6 +289,7 @@ namespace Adventure
                 Item selected = playerItems[selectedIndex];
                 shop.SellItem(player, selected);
                 inventory.RemoveItem(selected);
+                SellItemShop(player, shop, inventory);
                 
             }
 
