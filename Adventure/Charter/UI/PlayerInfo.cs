@@ -67,9 +67,8 @@ namespace Adventure
 
             if (Job == "전사")
             {
-                sKill.Add(new SKill("전사스킬1", 10, 10));
+                sKill.Add(new SKill("개 쌔게 때리기", 10, 10));
                 sKill.Add(new SKill("전사스킬2", 10, 10));
-                sKill.Add(new SKill("전사스킬3", 10, 10));
             }
             else if(Job == "마법사")
             {
