@@ -91,6 +91,7 @@ namespace Adventure
 
                 if (allMonsterDead)
                 {
+                    Console.Clear();
                     //전투 결과 호출 -승리
                     player.WinBattle(monsters.Length);
                     Console.WriteLine("");
