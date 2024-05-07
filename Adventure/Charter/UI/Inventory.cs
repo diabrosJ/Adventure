@@ -41,6 +41,7 @@ namespace Adventure
                         Console.ForegroundColor = ConsoleColor.Green;
                     }
                     Console.WriteLine($"{i + 1}. {equipped}{items[i].Name} | {items[i].Description}");
+                    Console.WriteLine() ;
                     Console.ResetColor();
                 }
             }
@@ -89,6 +90,7 @@ namespace Adventure
                         Console.ForegroundColor = ConsoleColor.Green;
                     }
                     Console.WriteLine($"{i + 1}. {equipped}{items[i].Name} | {items[i].Description}");
+                Console.WriteLine() ;
                     Console.ResetColor();
                 }
                 Console.WriteLine();

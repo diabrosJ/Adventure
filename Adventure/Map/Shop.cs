@@ -289,6 +289,10 @@ namespace Adventure
                 Item selected = playerItems[selectedIndex];
                 shop.SellItem(player, selected);
                 inventory.RemoveItem(selected);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(" 아이템을 판매했습니다.");
+                Console.ResetColor();
+                Thread.Sleep(1500);
                 SellItemShop(player, shop, inventory);
                 
             }
