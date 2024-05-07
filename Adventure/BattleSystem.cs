@@ -321,7 +321,7 @@ namespace Adventure
                             Console.ResetColor();
                         }
 
-                        break;
+                        return;
                     case 2:
                         //전사 스킬 2번
                         break;
