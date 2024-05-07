@@ -92,19 +92,32 @@ namespace Adventure
                 if (allMonsterDead)
                 {
                     //전투 결과 호출 -승리
-                    Console.WriteLine("전투에서 승리하셨습니다!");
                     player.WinBattle(monsters.Length);
+                    Console.WriteLine("");
+                    Console.WriteLine("1. 상태창");
+                    Console.WriteLine("2. 스테이지 선택");
+                    Console.WriteLine("3. 같은 스테이지 입장");
+                    Console.WriteLine("4. 메인 메뉴");
+                    int.TryParse(Console.ReadLine(), out int input);
+                    switch (input)
+                    {
+                        case 1:
+                            plyaer.Info(plyaer, shop, inventory);
+                            
+                            break;
+                        case 2:
+                            stageSelect.StageMenu(player, shop, inventory);
+                            break;
+                        case 3:
+                            StartBattle(player, shop, inventory);
+                            break;
+                        case 4:
+                            Console.Clear();
+                            return;
+                    }
                     Thread.Sleep(1000);
                     Console.Clear();
-                    if (AskForRetry())
-                    {
-                        // 다시 전투하기
-                        StartBattle(player, shop, inventory);
-                    }
-                    else
-                    {
-                        stageSelect.StageMenu(player, shop, inventory);
-                    }
+
                     break;
                 }
 
