@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,7 +14,9 @@ namespace Adventure
     {
         private PlayerInfo player;
         private Dictionary<string, Monster> monsters;
-        private StageSelect stageSelectMenu;
+        private StageSelect stageSelect = new StageSelect();
+
+        
 
         private Random random;
 
@@ -100,7 +103,7 @@ namespace Adventure
                     }
                     else
                     {
-                        stageSelectMenu.StageMenu(player, shop, inventory);
+                        stageSelect.StageMenu(player, shop, inventory);
                     }
                     break;
                 }
@@ -114,6 +117,7 @@ namespace Adventure
                 if (player.Hp <= 0)
                 {
                     Console.WriteLine("패배하셨습니다!");
+                    player.MAXHP();
                     if (AskForRetry())
                     {
                         // 다시 전투하기
@@ -121,7 +125,7 @@ namespace Adventure
                     }
                     else
                     {
-                        stageSelectMenu.StageMenu(player, shop, inventory);
+                        stageSelect.StageMenu(player, shop, inventory);
                     }
                     break;
                 }
@@ -341,6 +345,7 @@ namespace Adventure
             Console.WriteLine("다시 전투하시겠습니까? (Y/N)");
             string input = Console.ReadLine().ToUpper();
             return input == "Y";
+            
         }
     }
 }
