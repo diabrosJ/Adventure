@@ -13,14 +13,14 @@ namespace Adventure
     {
         private PlayerInfo player;
         private Dictionary<string, Monster> monsters;
-       
+        private StageSelect stageSelectMenu;
 
         private Random random;
 
         public BattleSystem(PlayerInfo player, Shop shop, Inventory inventory)
         {
             this.player = player;
-            
+
             random = new Random();
 
         }
@@ -33,26 +33,26 @@ namespace Adventure
             //랜덤하게 몬스터 생성
             CreateMonster[] monsters = new CreateMonster[random.Next(1, 5)];
 
-            for (int i= 0; i<monsters.Length; i++)
+            for (int i = 0; i < monsters.Length; i++)
             {
                 int monsterType = random.Next(1, 4);
 
-                switch(monsterType)
+                switch (monsterType)
                 {
                     case 1:
-                        monsters[i] =new CreateMonster(Monster.Monsters["CannonMinion"]);
+                        monsters[i] = new CreateMonster(Monster.Monsters["CannonMinion"]);
                         break;
                     case 2:
-                        monsters[i] =new CreateMonster(Monster.Monsters["MeleeMinion"]);
+                        monsters[i] = new CreateMonster(Monster.Monsters["MeleeMinion"]);
                         break;
                     case 3:
-                        monsters[i] =new CreateMonster( Monster.Monsters["Voidling"]);
+                        monsters[i] = new CreateMonster(Monster.Monsters["Voidling"]);
                         break;
-                        default:
-                        monsters[i] =new CreateMonster( Monster.Monsters["Minion"]);
+                    default:
+                        monsters[i] = new CreateMonster(Monster.Monsters["Minion"]);
                         break;
                 }
-            }          
+            }
 
             while (true)
             {
@@ -60,55 +60,73 @@ namespace Adventure
                 Console.WriteLine("[몬스터 정보]");
                 foreach (var monster in monsters)
                 {
-                    if(monster.Hp <= 0)
+                    if (monster.Hp <= 0)
                     {
                         Console.Write($"Lv.{monster.Level} {monster.Name}");
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine(" [DEAD]");
                         Console.ResetColor();
                     }
-                    if(monster.Hp>0)
-                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} HP: {monster.Hp}");
+                    if (monster.Hp > 0)
+                        Console.WriteLine($"Lv.{monster.Level} {monster.Name} HP: {monster.Hp}");
                 }
                 Console.WriteLine();
 
                 //플레이어의 턴
-                PlayerTurn( player, shop, inventory,monsters);
+                PlayerTurn(player, shop, inventory, monsters);
 
                 //몬스터가 모두 죽었는지 확인
                 bool allMonsterDead = true;
-                foreach(var monster in monsters)
+                foreach (var monster in monsters)
                 {
-                    if(monster.Hp > 0)
+                    if (monster.Hp > 0)
                     {
                         allMonsterDead = false;
                         break;
                     }
                 }
 
-                if(allMonsterDead) 
+                if (allMonsterDead)
                 {
                     //전투 결과 호출 -승리
-                    Console.Clear();
-                    Console.WriteLine("**승리**");
+                    Console.WriteLine("전투에서 승리하셨습니다!");
+                    player.WinBattle(monsters.Length);
                     Thread.Sleep(1000);
                     Console.Clear();
+                    if (AskForRetry())
+                    {
+                        // 다시 전투하기
+                        StartBattle(player, shop, inventory);
+                    }
+                    else
+                    {
+                        stageSelectMenu.StageMenu(player, shop, inventory);
+                    }
                     break;
                 }
 
 
                 Console.Clear();
-                MonsterTurn(monsters,player);
+                MonsterTurn(monsters, player);
 
                 //플레이어가 죽었는지 확인
 
-                if(player.Hp <= 0)
+                if (player.Hp <= 0)
                 {
-                    //전투 결과 호출 - 패배
+                    Console.WriteLine("패배하셨습니다!");
+                    if (AskForRetry())
+                    {
+                        // 다시 전투하기
+                        StartBattle(player, shop, inventory);
+                    }
+                    else
+                    {
+                        stageSelectMenu.StageMenu(player, shop, inventory);
+                    }
                     break;
                 }
-            }
 
+            }
         }
 
         private void PlayerTurn(PlayerInfo player, Shop shop, Inventory inventory, CreateMonster[] monsters)
@@ -124,9 +142,9 @@ namespace Adventure
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 스킬 사용");
 
-            int choice = int.Parse( Console.ReadLine() );
+            int choice = int.Parse(Console.ReadLine());
 
-            switch( choice )
+            switch (choice)
             {
                 case 1:
                     Attack(monsters);
@@ -150,7 +168,7 @@ namespace Adventure
             Console.WriteLine("공격할 몬스터 선택: ");
 
             //몬스터 리스트 출력
-            for(int i = 0; i<monsters.Length; i++) 
+            for (int i = 0; i < monsters.Length; i++)
             {
                 if (monsters[i].Hp > 0)
                 {
@@ -165,10 +183,10 @@ namespace Adventure
                 }
             }
             Console.WriteLine();
-            
-            int targetIndex = int.Parse( Console.ReadLine() ) - 1;
 
-            if(targetIndex < 0 || targetIndex >= monsters.Length)
+            int targetIndex = int.Parse(Console.ReadLine()) - 1;
+
+            if (targetIndex < 0 || targetIndex >= monsters.Length)
             {
                 Console.WriteLine("잘못된 입력입니다!");
                 Thread.Sleep(1000);
@@ -177,7 +195,7 @@ namespace Adventure
 
             CreateMonster target = monsters[targetIndex];
 
-            if(target.Hp <= 0)
+            if (target.Hp <= 0)
             {
                 Console.WriteLine("이미 죽은 적입니다.");
                 Thread.Sleep(1000);
@@ -186,11 +204,11 @@ namespace Adventure
 
             //공격력 계산
             int baseDamage = player.GetEquippedAttack();
-            int damage= random.Next((int)(baseDamage * 0.9), (int)(baseDamage *1.1) +1);
+            int damage = random.Next((int)(baseDamage * 0.9), (int)(baseDamage * 1.1) + 1);
 
             //몬스터에게 데미지 적용
             target.Hp -= damage;
-            if(target.Hp <= 0)
+            if (target.Hp <= 0)
             {
                 target.Hp = 0;
                 Console.WriteLine($"{target.Name} 은 죽었다!");
@@ -207,7 +225,7 @@ namespace Adventure
         private void UseSkill()
         {
             //해당 직업의 스킬 사용 구현
-            if(player.Job == "전사")
+            if (player.Job == "전사")
             {
                 Console.WriteLine("**스킬 목록**");
                 Console.WriteLine("1. 스킬 이름 - MP ??");
@@ -218,7 +236,7 @@ namespace Adventure
                 Console.WriteLine("사용할 스킬을 선택하세요.");
 
                 int skillChoice = int.Parse(Console.ReadLine());
-                switch(skillChoice)
+                switch (skillChoice)
                 {
                     case 1:
                         //전사 스킬 1번
@@ -233,7 +251,7 @@ namespace Adventure
                         break;
                 }
             }
-            else if(player.Job == "마법사")
+            else if (player.Job == "마법사")
             {
                 Console.WriteLine("**스킬 목록**");
                 Console.WriteLine("1. 스킬 이름 - MP ??");
@@ -259,7 +277,7 @@ namespace Adventure
                         break;
                 }
             }
-            else if(player.Job == "도적")
+            else if (player.Job == "도적")
             {
                 Console.WriteLine("**스킬 목록**");
                 Console.WriteLine("1. 스킬 이름 - MP ??");
@@ -285,24 +303,24 @@ namespace Adventure
                         break;
                 }
             }
-           
+
         }
 
-        private void MonsterTurn(CreateMonster[] monsters,PlayerInfo player)
+        private void MonsterTurn(CreateMonster[] monsters, PlayerInfo player)
         {
-            foreach(var monster in monsters)
+            foreach (var monster in monsters)
             {
-                if(monster.Hp > 0)
+                if (monster.Hp > 0)
                 {
                     //continue;
                     //Console.Clear();
                     //몬스터가 플레이어 공격
-                    int playerDef = (int)player.GetEquippedDefense() /3;
+                    int playerDef = (int)player.GetEquippedDefense() / 3;
 
                     int baseDamage = monster.Atk;
                     int damgage = random.Next((int)(baseDamage * 0.9), (int)(baseDamage * 1.1) + 1);
-                    
-                    if(damgage - playerDef < 0)
+
+                    if (damgage - playerDef < 0)
                     {
                         damgage = 0;
                     }
@@ -317,6 +335,12 @@ namespace Adventure
                     continue;
                 }
             }
+        }
+        private bool AskForRetry()
+        {
+            Console.WriteLine("다시 전투하시겠습니까? (Y/N)");
+            string input = Console.ReadLine().ToUpper();
+            return input == "Y";
         }
     }
 }

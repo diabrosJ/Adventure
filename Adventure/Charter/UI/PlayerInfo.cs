@@ -22,6 +22,7 @@ namespace Adventure
         public int Hp { get; set; }
         public int Gold { get; set; }
         public int Mp { get; set; }
+        public int Exp {  get; set; }
         //public int equippedHP { get; set; }
         //public int equippedMP { get; set; }
         //public int equippedAtk { get; set; }
@@ -53,6 +54,7 @@ namespace Adventure
             //마력
             Gold = gold;
             //골드
+
 
 
           
@@ -207,6 +209,17 @@ namespace Adventure
         public void AdjustGold(int amount)
         {
             Gold += amount;
+        }
+        public void WinBattle(int numMonsters)
+        {
+            // 각 몬스터에 대한 경험치 계산
+            int experiencePerMonster = 10;
+            int totalExperience = experiencePerMonster * numMonsters;
+
+            // 경험치 증가
+            Exp += totalExperience;
+            Console.WriteLine($"획득한 경험치: {totalExperience}");
+            //Console.WriteLine($"현재 경험치: {player.Exp}");
         }
 
     }
