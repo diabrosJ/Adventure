@@ -106,7 +106,12 @@ namespace Adventure
                     foreach (var item in items)
                     {
                         string purchased = item.IsPurchased ? "구매완료" : $"{item.Price} G";
+                        if (item.IsPurchased)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                        }
                         Console.WriteLine($"- {item.Name} | {item.Description} | {purchased}");
+                        Console.ResetColor();
                     }
                 }
 
@@ -131,7 +136,7 @@ namespace Adventure
                         exitShop = true;
                         break;
                     case 0:
-                        player.Info();
+                        player.Info(player, shop, inventory);
                         //goMain.mainScence(player);
                         exitShop = true;
                         break;
@@ -164,7 +169,13 @@ namespace Adventure
             {
                 //아이템이 이미 구매되었다면 "구매 완료"를, 아니면 가격을 표시
                 string purchased = availableItems[i].IsPurchased ? "구매완료" : $"{availableItems[i].Price} G";
+                if (availableItems[i].IsPurchased)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                }
+
                 Console.WriteLine($"{i + 1}. {availableItems[i].Name} | {availableItems[i].Description} | {purchased}");
+                Console.ResetColor();
             }
             
                 Console.WriteLine();
