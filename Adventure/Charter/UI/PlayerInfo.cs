@@ -23,6 +23,7 @@ namespace Adventure
         public int Gold { get; set; }
         public int menu { get; set; }
         public int Mp { get; set; }
+        public int Exp { get; set; }
 
         private List<Item> equippedItems;
 
@@ -139,5 +140,14 @@ namespace Adventure
             Gold += amount;
         }
 
+        public void WinBattle(int numMonsters)
+        {
+            // 각 몬스터에 대한 경험치 계산
+            int experiencePerMonster = 10;
+            int totalExperience = experiencePerMonster * numMonsters;
+
+            // 경험치 증가
+            Exp += totalExperience;
+        }
     }
 }

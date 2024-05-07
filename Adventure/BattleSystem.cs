@@ -16,6 +16,7 @@ namespace Adventure
         private WarriorSkills warriorSkills;
         private WizardSkills wizardSkills;
         private BanditSkills banditSkills;
+        private StageSelect stageSelect;
 
         private Random random;
 
@@ -84,6 +85,11 @@ namespace Adventure
                 if(allMonsterDead) 
                 {
                     //전투 결과 호출 -승리
+                    if (allMonsterDead)
+                    {
+                        player.WinBattle(monsters.Length);
+                        DisplayVictoryMessage();
+                    }
                     break;
                 }
 
@@ -91,11 +97,20 @@ namespace Adventure
 
                 //플레이어가 죽었는지 확인
 
-                if(player.Hp <= 0)
+                if (player.Hp <= 0)
                 {
-                    //전투 결과 호출 - 패배
-                    break;
+                    DefeatMessage();
+                    if (AskRetry())
+                    {
+                        // 다시 전투하기
+                        StartBattle(player, shop, inventory);
+                    }
+                    else
+                    {
+                        stageSelect.StageMenu(player, shop, inventory);
+                    }
                 }
+
             }
 
         }
@@ -279,5 +294,21 @@ namespace Adventure
                 }
             }
         }
+        private void DisplayVictoryMessage()
+        {
+            Console.WriteLine("승리하셨습니다!");
+        }
+        private void DefeatMessage()
+        {
+            Console.WriteLine("패배하셨습니다!");
+        }
+
+        private bool AskRetry()
+        {
+            Console.WriteLine("다시 전투하시겠습니까? (Y/N)");
+            string input = Console.ReadLine().ToUpper();
+            return input == "Y";
+        }
     }
+
 }

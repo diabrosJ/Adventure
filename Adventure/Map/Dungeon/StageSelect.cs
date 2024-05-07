@@ -52,13 +52,13 @@ internal class StageSelect
         switch (input)
         {
             case 1:
-                battleStage.getBattle(monsterInfo);
+                battleSystem.StartBattle(_playerinfo, shop, inventory);
                 break;
                 case 2:
                 battleSystem.StartBattle(_playerinfo, shop, inventory);
                 break;
             case 3:
-                _playerinfo.Info(_playerinfo, shop, inventory);
+                battleSystem.StartBattle(_playerinfo, shop, inventory);
                 break;
             default:
                 if (input != 1 && input != 3)
