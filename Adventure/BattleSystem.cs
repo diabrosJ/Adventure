@@ -157,7 +157,7 @@ namespace Adventure
                     break;
                 case 2:
                     //스킬 사용
-                    UseSkill();
+                    UseSkill(monsters, player);
                     break;
                 default:
                     Console.WriteLine("잘못된 입력입니다.");
@@ -226,14 +226,17 @@ namespace Adventure
 
         }
 
-        private void UseSkill()
+        private void UseSkill(CreateMonster[] monsters,PlayerInfo player)
         {
             //해당 직업의 스킬 사용 구현
             if (player.Job == "전사")
             {
+                Console.WriteLine();
                 Console.WriteLine("**스킬 목록**");
-                Console.WriteLine("1. 스킬 이름 - MP ??");
-                Console.WriteLine("--스킬 효과 설명--");
+                Console.WriteLine();
+                Console.WriteLine("1. 개 쌔게 때리기 - MP 10");
+                Console.WriteLine("--선택한 몬스터를 개 쌔게 때려서 데미지를 입힌다.--");
+                Console.WriteLine();
                 Console.WriteLine("2. 스킬 이름 - MP ??");
                 Console.WriteLine("--스킬 효과 설명--");
                 Console.WriteLine();
@@ -244,14 +247,75 @@ namespace Adventure
                 {
                     case 1:
                         //전사 스킬 1번
+                        Console.WriteLine();
+                        Console.WriteLine("스킬을 사용할 몬스터 선택: ");
+
+                        //몬스터 리스트 출력
+                        for (int i = 0; i < monsters.Length; i++)
+                        {
+                            if (monsters[i].Hp > 0)
+                            {
+                                Console.WriteLine($"{i + 1}. {monsters[i].Name} - HP : {monsters[i].Hp}");
+                            }
+                            if (monsters[i].Hp < 0)
+                            {
+                                Console.Write($"{i + 1}. {monsters[i].Name} : ");
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("[DEAD]\n");
+                                Console.ResetColor();
+                            }
+                        }
+                        Console.WriteLine();
+
+                        int targetIndex = int.Parse(Console.ReadLine()) - 1;
+
+                        if (targetIndex < 0 || targetIndex >= monsters.Length)
+                        {
+                            Console.WriteLine("잘못된 입력입니다!");
+                            Thread.Sleep(1000);
+                            Attack(monsters);
+                        }
+
+                        CreateMonster target = monsters[targetIndex];
+
+                        if (target.Hp <= 0)
+                        {
+                            Console.WriteLine("이미 죽은 적입니다.");
+                            Thread.Sleep(1000);
+                            Attack(monsters);
+                        }
+                        //공격력 계산
+                        int baseDamage = player.GetEquippedAttack();
+                        int damage = random.Next((int)(baseDamage * 1.2), (int)(baseDamage * 1.6) + 1);
+
+                        //몬스터에게 데미지 적용
+                        target.Hp -= damage;
+                        player.Mp -= 10;
+                        if (target.Hp <= 0)
+                        {
+                            target.Hp = 0;
+                            Console.WriteLine($"{target.Name} 은 죽었다!");
+                            Thread.Sleep(1000);
+                        }
+                        else
+                        {
+                            Console.WriteLine();
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine($"{player.Name} 은(는) 스킬 1번을 사용하여 {target.Name}을(를) 개 쌔게 때렸다!");
+                            Console.WriteLine($"{target.Name}은(는) {damage} 만큼 데미지를 입었다!");
+                            
+                            Thread.Sleep(2000);
+                            Console.ResetColor();
+                        }
+
                         break;
                     case 2:
                         //전사 스킬 2번
                         break;
                     default:
                         Console.WriteLine("잘못된 입력입니다!..");
-                        Thread.Sleep(1000);
-                        UseSkill();
+                        Thread.Sleep(2000);
+                        UseSkill(monsters,player);
                         break;
                 }
             }
@@ -277,7 +341,7 @@ namespace Adventure
                     default:
                         Console.WriteLine("잘못된 입력입니다!..");
                         Thread.Sleep(1000);
-                        UseSkill();
+                        UseSkill(monsters, player);
                         break;
                 }
             }
@@ -303,7 +367,7 @@ namespace Adventure
                     default:
                         Console.WriteLine("잘못된 입력입니다!..");
                         Thread.Sleep(1000);
-                        UseSkill();
+                        UseSkill(monsters, player);
                         break;
                 }
             }
