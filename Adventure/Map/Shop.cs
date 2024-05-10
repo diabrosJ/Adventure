@@ -22,12 +22,13 @@ namespace Adventure
             //가격,추가 공격력, 추가 방어력, 추가 체력, 추가 마나 순서
             availableItems = new List<Item>
             {
-                new Item("아이템1","아이템이 주는 스탯 | 아이템 설명 ", 100,10,5,50,20),
-                new Item("아이템2","아이템이 주는 스탯 | 아이템 설명 ", 200,20,10,100,30),
-                new Item("아이템3","아이템이 주는 스탯 | 아이템 설명 ", 300,45,15,200,60),
-                new Item("아이템4","아이템이 주는 스탯 | 아이템 설명 ", 400,80,50,250,80),
-                new Item("아이템5","아이템이 주는 스탯 | 아이템 설명 ", 500,100,70,270,100),
-                new Item("아이템6","아이템이 주는 스탯 | 아이템 설명 ", 600,150,80,300,120),
+                new Item("평범한 직검","공격력 +5,체력 + 10 | 흔히 볼 수 있는 평범한 직검이다. ", 100,5,0,10,0),
+  
+                new Item("쉰내나는 갑옷","방어력 + 8, 체력 + 50 | 누군가 오래 입고 있다 벗은듯한 갑옷이다. ", 200,0,8,50,0),
+                new Item("은반지","공격력 +3, 방어력 + 3, 체력 + 20, 마나 + 10 | 할머니 반짓고리에서 발견한 은반지 ", 300,3,3,20,10),
+                new Item("딱총나무 스태프","공격력 + 5, 마나 + 10 | 아이템 설명 ", 400,5,0,0,10),
+                new Item("주머니 검","공격력 +3, 체력 + 5 | 주머니에 쏙 들어가는 작은 칼 ", 50,3,0,5,0),
+         
 
            };
         }
@@ -87,10 +88,14 @@ namespace Adventure
             while (!exitShop)
             {
                 Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("** 상점 **");
                 Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
+                Console.ResetColor();
                 Console.WriteLine();
+                Console.ForegroundColor= ConsoleColor.Yellow;
                 Console.WriteLine($"[보유 골드] {player.Gold} G");
+                Console.ResetColor();
                 Console.WriteLine();
 
                 List<Item> items = shop.GetAvailableItems(player); //플레이어가 구매할 수 있는 아이템 목록 가져오기
@@ -111,6 +116,7 @@ namespace Adventure
                             Console.ForegroundColor = ConsoleColor.Yellow;
                         }
                         Console.WriteLine($"- {item.Name} | {item.Description} | {purchased}");
+                        Console.WriteLine();
                         Console.ResetColor();
                     }
                 }
@@ -175,6 +181,7 @@ namespace Adventure
                 }
 
                 Console.WriteLine($"{i + 1}. {availableItems[i].Name} | {availableItems[i].Description} | {purchased}");
+                Console.WriteLine() ;
                 Console.ResetColor();
             }
             
@@ -266,8 +273,9 @@ namespace Adventure
             if (!int.TryParse(Console.ReadLine(), out selectedIndex) || selectedIndex < 0 || selectedIndex > playerItems.Count)
             {
                 Console.WriteLine("잘못된 입력입니다.");
+                SellItemShop(player,shop,inventory);  
                 Thread.Sleep(2000);
-                return;
+    
             }
 
             selectedIndex--;
@@ -281,6 +289,7 @@ namespace Adventure
                 Item selected = playerItems[selectedIndex];
                 shop.SellItem(player, selected);
                 inventory.RemoveItem(selected);
+                SellItemShop(player, shop, inventory);
                 
             }
 
